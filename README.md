@@ -1,20 +1,6 @@
-**🎵 TuneTrails - Music Streaming Web App**
+**🎵 HustleHouse - Music Streaming Web App**
 
 Tech Stack: MongoDB, Express.js, React.js, Node.js, Cloudinary
-
-👨‍💻 **Project Team:**
-
-This project was collaboratively developed by the following students:
-
-Viraj Mane – Registration No: 22BCE11473
-
-Prathamesh Chaudhari – Registration No: 22BCE11926
-
-Darpan Nemade – Registration No: 22BAI10197
-
-Aniket Shankarwar – Registration No: 22BCG10061
-
-**Team ID**: **SWTID1744376795**
 
 🚀 **Key Features:**
 
