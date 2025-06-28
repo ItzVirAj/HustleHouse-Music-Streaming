@@ -1,0 +1,90 @@
+.sidebar {
+  width: 25%;
+  height: 100%;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  color: white;
+  background: linear-gradient(145deg, #68202a, #16213e);
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  overflow-y: auto;
+}
+
+.sidebar-section {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.sidebar-link img {
+  width: 22px;
+  height: 22px;
+  opacity: 0.9;
+}
+
+.sidebar-link:hover {
+  color: #00ffff;
+  transform: translateX(5px);
+}
+
+.sidebar-library-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.library-left,
+.library-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.library-left span {
+  font-weight: 600;
+}
+
+.library-right img {
+  width: 20px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.library-right img:hover {
+  transform: scale(1.1);
+}
+
+.admin-btn {
+  margin-top: 20px;
+  padding: 10px 18px;
+  background-color: #ffffff;
+  color: #000;
+  border: none;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.admin-btn:hover {
+  background-color: #f0f0f0;
+}

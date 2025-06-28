@@ -1,0 +1,46 @@
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: linear-gradient(to right, #26233b, #4a4953, #24243e);
+  overflow: hidden;
+}
+
+.layout-main {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+.layout-content {
+  flex: 1;
+  margin: 16px;
+  margin-left: 0;
+  border-radius: 16px;
+  background-color: #121212;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.layout-children {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #ffffff40 transparent;
+}
+
+.layout-children::-webkit-scrollbar {
+  width: 8px;
+}
+
+.layout-children::-webkit-scrollbar-thumb {
+  background-color: #ffffff40;
+  border-radius: 4px;
+}
+
+.layout-children::-webkit-scrollbar-track {
+  background: transparent;
+}

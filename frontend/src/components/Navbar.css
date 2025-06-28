@@ -1,0 +1,98 @@
+.navbar-container {
+  margin-bottom: 20px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  border-radius: 16px;
+  padding: 16px 20px;
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.03);
+  color: white;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-controls {
+  display: flex;
+  gap: 12px;
+}
+
+.nav-arrow {
+  width: 32px;
+  padding: 6px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.nav-arrow:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.nav-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.logout-button {
+  background: white;
+  color: black;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  font-family: "42dotSans", sans-serif;
+}
+
+.logout-button:hover {
+  background: #f0f0f0;
+}
+
+.navbar-tabs {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.tab {
+  padding: 6px 16px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.06);
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  border: none;
+  font-family: "42dotSans", sans-serif;
+}
+
+.tab:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.tab.active {
+  background: white;
+  color: black;
+  font-weight: 600;
+}
+
+.hide-on-small {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .hide-on-small {
+    display: inline-block;
+  }
+  .show-on-small {
+    display: none;
+  }
+}

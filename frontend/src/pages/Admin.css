@@ -1,0 +1,127 @@
+.admin-container {
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+  color: white;
+  min-height: 100vh;
+  padding: 40px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+
+}
+
+.dashboard-title {
+  font-size: 36px;
+  font-weight: bold;
+  font-family: "Modrenize", sans-serif;
+}
+
+.btn-home {
+  background: #5b22c5;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-bottom: 50px;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.05);
+}
+
+.section-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  font-family: "Modrenize", sans-serif;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+form input,
+form select {
+  padding: 10px 14px;
+  background: #2b2b2b;
+  border: none;
+  border-radius: 8px;
+  color: white;
+}
+
+form button {
+  background-color: #7c22c5;
+  color: white;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+form button:disabled {
+  background: #444;
+  cursor: not-allowed;
+}
+
+.songs-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.song-card {
+  width: 240px;
+  padding: 16px;
+  position: relative;
+}
+
+.song-thumb {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.thumb-upload {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.btn-delete {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #ef4444;
+  color: white;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.song-details {
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 1.6;
+}

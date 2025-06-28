@@ -1,0 +1,183 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.login-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+.login-left {
+  width: 50%;
+  background: #ffffff;
+  padding: 80px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-title {
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-family: "Modrenize", sans-serif;
+}
+
+.welcome-text {
+  font-size: 20px;
+  margin-bottom: 30px;
+  font-family: "42dotSans", sans-serif;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+    font-family: "42dotSans", sans-serif;
+
+}
+
+.login-input {
+  padding: 12px 14px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: border 0.3s ease;
+  background-color: white;
+
+}
+
+.login-input:focus {
+  border-color: #333;
+}
+
+.divider {
+  text-align: center;
+  font-size: 14px;
+  color: #999;
+}
+
+.forgot-password {
+  text-align: right;
+  font-size: 14px;
+  margin-top: -10px;
+}
+
+.forgot-password a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}
+
+.login-button {
+  background-color: black;
+  color: white;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+  font-family: "Modrenize", sans-serif;
+}
+
+.login-button:disabled {
+  background-color: #444;
+  cursor: not-allowed;
+}
+
+.signup-text {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  
+}
+
+.signup-text a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.signup-text a:hover {
+  text-decoration: underline;
+}
+
+.login-right {
+  width: 50%;
+  background: linear-gradient(135deg, #ec0c0c, #064597, #9a0f0f);
+  color: white;
+  position: relative;
+  padding: 80px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-top-right-radius: 60px;
+  border-bottom-right-radius: 60px;
+  
+}
+
+.info-box {
+  max-width: 400px;
+}
+
+.info-box h2 {
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  font-family: "Modrenize", sans-serif; 
+}
+
+.info-box p {
+  font-size: 15px;
+  line-height: 1.5;
+  color: #ddd;
+}
+
+.top-buttons {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  display: flex;
+  gap: 10px;
+  
+}
+
+.btn-outline,
+.btn-filled {
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-family: "Modrenize", sans-serif;
+}
+
+.btn-outline {
+  border: 1px solid white;
+  color: white;
+  background: transparent;
+}
+
+.btn-outline:hover {
+  background: white;
+  color: black;
+}
+
+.btn-filled {
+  background: white;
+  color: black;
+  font-weight: 600;
+  border: none;
+}
+
+.btn-filled:hover {
+  background: #f0f0f0;
+}

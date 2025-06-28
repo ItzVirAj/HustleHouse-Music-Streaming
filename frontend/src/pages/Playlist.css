@@ -1,0 +1,153 @@
+.playlist-container {
+  margin: 60px 40px;
+  color: rgb(255, 255, 255);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.playlist-banner {
+  display: flex;
+  gap: 40px;
+  padding: 30px;
+  margin-bottom: 40px;
+  border-radius: 20px;
+  align-items: center;
+}
+
+.playlist-cover {
+  width: 160px;
+  height: 160px;
+  border-radius: 16px;
+  object-fit: cover;
+}
+
+.playlist-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.playlist-type {
+  text-transform: uppercase;
+  font-size: 13px;
+  color: #bbbbbb;
+  margin-bottom: 5px;
+}
+
+.playlist-title {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-family: "Modrenize", sans-serif;
+}
+
+.playlist-desc {
+  font-size: 16px;
+  color: #cccccc;
+  font-family: "42dotSans", sans-serif;
+}
+
+.spotify-logo {
+  width: 28px;
+  margin-top: 12px;
+}
+
+.playlist-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 2fr 1fr;
+  font-weight: 600;
+  color: #bbbbbb;
+  font-size: 14px;
+  margin-bottom: 10px;
+  padding: 0 10px;
+}
+
+.divider {
+  border: 0.5px solid #444;
+  margin-bottom: 20px;
+}
+
+.playlist-item {
+  display: grid;
+  grid-template-columns: 2fr 1fr 2fr 1fr;
+  align-items: center;
+  padding: 12px 10px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  transition: background 0.3s ease;
+}
+
+.glass-hover:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.playlist-index {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.index {
+  color: #888;
+  width: 20px;
+}
+
+.song-thumb {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.song-title {
+  font-weight: 500;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: "42dotSans", sans-serif;
+}
+
+.song-artist,
+.song-desc {
+  font-size: 14px;
+  color: #cccccc;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.playlist-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  font-size: 18px;
+  color: #4ade80;
+}
+
+.playlist-actions button {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.playlist-actions button:hover {
+  color: #86efac;
+}
+
+.desc-col {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .desc-col {
+    display: block;
+  }
+}
+
+/* Glass card base */
+.glass-card {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.05);
+}
