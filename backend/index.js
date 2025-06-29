@@ -19,7 +19,7 @@ const app = express();
 // ✅ Enable CORS before routes
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://hustle-house-front.vercel.app/",
     credentials: true,
   })
 );
