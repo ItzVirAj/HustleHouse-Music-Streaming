@@ -1,6 +1,7 @@
 // src/pages/Search.jsx
 import React, { useState } from "react";
-import axios from "axios";
+import API from "../api/axios"; // ✅ adjust path if needed
+
 
 const Search = () => {
   const [query, setQuery] = useState("");
@@ -12,14 +13,12 @@ const Search = () => {
 
     setLoading(true);
     try {
-      const res = await axios.get(
-        `http://localhost:5000/api/song/search/${query}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+const res = await API.get(`/song/search/${query}`, {
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
+});
+
 
       console.log("Search response:", res.data);
       setSongs(res.data.songs || []);
