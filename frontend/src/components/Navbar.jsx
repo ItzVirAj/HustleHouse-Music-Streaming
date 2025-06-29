@@ -35,9 +35,18 @@ const Navbar = () => {
 
       <div className="navbar-tabs">
         <button className="tab active">All</button>
-        <button className="tab hide-on-small">Music</button>
-        <button className="tab hide-on-small">Podcasts</button>
-        <button className="tab show-on-small" onClick={() => navigate("/playlist")}>
+        <a
+          href="https://github.com/ItzVirAj"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <button className="tab hide-on-small">Github</button>
+        </a>
+
+        <button
+          className="tab show-on-small"
+          onClick={() => navigate("/playlist")}
+        >
           Playlist
         </button>
       </div>

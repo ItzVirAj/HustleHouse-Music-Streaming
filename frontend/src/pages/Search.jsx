@@ -1,26 +1,28 @@
-// src/pages/Search.jsx
 import React, { useState } from "react";
-import API from "../api/axios"; // ✅ adjust path if needed
-
+import API from "../api/api";
+import { FaPlay } from "react-icons/fa";
+import { SongData } from "../context/Song";
+import Player from "../components/Player";
+import "./Search.css"; // ⬅️ Make sure this file exists
+import Navbar from "../components/Navbar";
 
 const Search = () => {
   const [query, setQuery] = useState("");
   const [songs, setSongs] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { setSelectedSong, setIsPlaying } = SongData();
 
   const handleSearch = async () => {
     if (!query.trim()) return;
 
     setLoading(true);
     try {
-const res = await API.get(`/song/search/${query}`, {
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-  },
-});
+      const res = await API.get(`/song/search/${query}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
 
-
-      console.log("Search response:", res.data);
       setSongs(res.data.songs || []);
     } catch (err) {
       console.error("Search error", err);
@@ -30,38 +32,51 @@ const res = await API.get(`/song/search/${query}`, {
     }
   };
 
+  const handlePlay = (songId) => {
+    setSelectedSong(songId);
+    setIsPlaying(true);
+  };
+
   return (
-    <div className="p-4 text-white">
-      <div className="flex gap-2 mb-4">
+    <div className="search-container">
+      <Navbar />
+      <div className="search-bar">
         <input
           type="text"
-          className="w-full px-4 py-2 rounded bg-[#1e1e1e] text-white"
+          className="search-input"
           placeholder="Search for a song..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
-        <button
-          onClick={handleSearch}
-          className="px-4 py-2 bg-green-500 rounded"
-        >
+        <button onClick={handleSearch} className="search-button">
           {loading ? "Searching..." : "Search"}
         </button>
       </div>
 
-      <div>
+      <div className="search-results">
         {songs.length > 0 ? (
           songs.map((song) => (
-            <div key={song._id} className="mb-2 p-2 border-b border-gray-700">
-              <p className="font-bold">{song.title}</p>
-              <p className="text-sm text-gray-400">{song.singer}</p>
+            <div key={song._id} className="song-item">
+              <div>
+                <p className="song-title">{song.title}</p>
+                <p className="song-singer">{song.singer}</p>
+              </div>
+              <button
+                onClick={() => handlePlay(song._id)}
+                className="play-button"
+              >
+                <FaPlay />
+              </button>
             </div>
           ))
         ) : (
           !loading &&
-          query && (
-            <p className="text-gray-400">No songs found for "{query}"</p>
-          )
+          query && <p className="no-result">No songs found for "{query}"</p>
         )}
+      </div>
+
+      <div className="player-wrapper">
+        <Player />
       </div>
     </div>
   );

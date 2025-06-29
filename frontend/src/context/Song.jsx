@@ -1,4 +1,4 @@
-import API from "../api/axios";
+import API from "../api/api";
 
 import { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -15,7 +15,7 @@ export const SongProvider = ({ children }) => {
 
   async function fetchSongs() {
     try {
-      const { data } = await API.get("/api/song/all");
+      const { data } = await API.get("/song/all");
 
       setSongs(data);
       setSelectedSong(data[0]._id);
@@ -29,7 +29,7 @@ export const SongProvider = ({ children }) => {
 
   async function fetchSingleSong() {
     try {
-      const { data } = await API.get("/api/song/single/" + selectedSong);
+      const { data } = await API.get("/song/single/" + selectedSong);
 
       setSong(data);
     } catch (error) {
@@ -40,7 +40,7 @@ export const SongProvider = ({ children }) => {
   async function addAlbum(formData, setTitle, setDescription, setFile) {
     setLoading(true);
     try {
-      const { data } = await API.post("/api/song/album/new", formData);
+      const { data } = await API.post("/song/album/new", formData);
       toast.success(data.message);
       setLoading(false);
       fetchAlbums();
@@ -63,7 +63,7 @@ export const SongProvider = ({ children }) => {
   ) {
     setLoading(true);
     try {
-      const { data } = await API.post("/api/song/new", formData);
+      const { data } = await API.post("/song/new", formData);
       toast.success(data.message);
       setLoading(false);
       fetchSongs();
@@ -81,7 +81,7 @@ export const SongProvider = ({ children }) => {
   async function addThumbnail(id, formData, setFile) {
     setLoading(true);
     try {
-      const { data } = await API.post("/api/song/" + id, formData);
+      const { data } = await API.post("/song/" + id, formData);
       toast.success(data.message);
       setLoading(false);
       fetchSongs();
@@ -96,7 +96,7 @@ export const SongProvider = ({ children }) => {
 
   async function fetchAlbums() {
     try {
-      const { data } = await API.get("/api/song/album/all");
+      const { data } = await API.get("/song/album/all");
 
       setAlbums(data);
     } catch (error) {
@@ -106,7 +106,7 @@ export const SongProvider = ({ children }) => {
 
   async function deleteSong(id) {
     try {
-      const { data } = await API.delete("/api/song/" + id);
+      const { data } = await API.delete("/song/" + id);
 
       toast.success(data.message);
       fetchSongs();
@@ -145,7 +145,7 @@ export const SongProvider = ({ children }) => {
 
   async function fetchAlbumSong(id) {
     try {
-      const { data } = await API.get("/api/song/album/" + id);
+      const { data } = await API.get("/song/album/" + id);
       setAlbumSong(data.songs);
       setAlbumData(data.album);
     } catch (error) {
