@@ -1,4 +1,4 @@
-import axios from "axios";
+import API from "../api/axios";
 import { createContext, useContext, useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -20,7 +20,7 @@ export const UserProvider = ({ children }) => {
   ) {
     setBtnLoading(true);
     try {
-      const { data } = await axios.post("/api/user/register", {
+      const { data } = await API.post("/api/user/register", {
         name,
         email,
         password,
@@ -42,7 +42,7 @@ export const UserProvider = ({ children }) => {
   async function loginUser(email, password, navigate, fetchSongs, fetchAlbums) {
     setBtnLoading(true);
     try {
-      const { data } = await axios.post("/api/user/login", {
+      const { data } = await API.post("/api/user/login", {
         email,
         password,
       });
@@ -62,7 +62,7 @@ export const UserProvider = ({ children }) => {
 
   async function fetchUser() {
     try {
-      const { data } = await axios.get("/api/user/me");
+      const { data } = await API.get("/api/user/me");
 
       setUser(data);
       setIsAuth(true);
@@ -76,7 +76,7 @@ export const UserProvider = ({ children }) => {
 
   async function logoutUser() {
     try {
-      const { data } = await axios.get("/api/user/logout");
+      const { data } = await API.get("/api/user/logout");
 
       window.location.reload();
     } catch (error) {
@@ -86,7 +86,7 @@ export const UserProvider = ({ children }) => {
 
   async function addToPlaylist(id) {
     try {
-      const { data } = await axios.post("/api/user/song/" + id);
+      const { data } = await API.post("/api/user/song/" + id);
 
       toast.success(data.message);
       fetchUser();
