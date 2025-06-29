@@ -27,6 +27,7 @@ app.use(
 // ✅ Middleware
 app.use(express.json());
 app.use(cookieParser());
+app.use(express.urlencoded({ extended: true })); // For form data
 
 // ✅ Routes
 import userRoutes from "./routes/userRoutes.js";
@@ -37,10 +38,13 @@ app.use("/api/song", songRoutes);
 
 // ✅ Static frontend files
 const __dirname = path.resolve();
-app.use(express.static(path.join(__dirname, "/frontend/dist")));
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
-});
+if (process.env.NODE_ENV === 'production') {
+  const frontendPath = path.join(__dirname, '../../frontend/dist');
+  app.use(express.static(frontendPath));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(frontendPath, 'index.html'));
+  });
+}
 
 // ✅ Start server
 const port = 5000;

@@ -29,6 +29,7 @@ const Home = () => {
             <a href="#" className="see-all">See all</a>
           </div>
           <div className="scroll-row">
+            
             {albums?.map((album, i) => (
               <AlbumItem
                 key={album._id || i}
@@ -37,6 +38,7 @@ const Home = () => {
                 desc={album.description}
                 id={album._id}
               />
+              
             ))}
           </div>
         </section>

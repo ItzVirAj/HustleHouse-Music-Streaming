@@ -2,17 +2,22 @@ import mongoose from 'mongoose';
 
 const connectDb = async () => {
   try {
-    await mongoose.connect(
-      "mongodb+srv://boltedaddy9:6CDOUSRj3RzXPMiN@tunetrails.jmfdmhb.mongodb.net/?retryWrites=true&w=majority&appName=TuneTrails",
-      {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      }
-    );
+    if (!process.env.MONGODB_URI) {
+      throw new Error('MONGODB_URI environment variable is not defined');
+    }
+
+    await mongoose.connect(process.env.MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      // Add these additional options for better connection handling
+      serverSelectionTimeoutMS: 5000,
+      maxPoolSize: 10,
+    });
+    
     console.log("✅ MongoDB Connected Successfully");
   } catch (error) {
     console.error("❌ MongoDB Connection Error:", error.message);
-    process.exit(1); // Exit the process on connection failure
+    process.exit(1);
   }
 };
 
