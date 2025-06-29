@@ -10,11 +10,10 @@ import path from "path";
 dotenv.config();
 
 cloudinary.v2.config({
-  cloud_name: "daijhwmiz",
-  api_key: "391117176166748",
-  api_secret: "M4IvZQmtZQHw0zMFXffcVaNgCgM",
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
-
 const app = express();
 
 // ✅ Enable CORS before routes
