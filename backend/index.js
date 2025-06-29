@@ -1,54 +1,50 @@
-// index.js
+// api/index.js (MOVE to `api/index.js`)
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import { connectDb } from './database/db.js';
+import { connectDb } from "../database/db.js"; // adjust if needed
 import cookieParser from "cookie-parser";
 import cloudinary from "cloudinary";
-import path from "path";
 
 dotenv.config();
 
+// Configure Cloudinary
 cloudinary.v2.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
+
 const app = express();
 
-// ✅ Enable CORS before routes
+// CORS middleware
 app.use(
   cors({
-    origin: "https://hustle-house-front.vercel.app/",
+    origin: "https://hustle-house-front.vercel.app",
     credentials: true,
   })
 );
 
-// ✅ Middleware
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.urlencoded({ extended: true })); // For form data
+app.use(express.urlencoded({ extended: true }));
 
-// ✅ Routes
-import userRoutes from "./routes/userRoutes.js";
-import songRoutes from "./routes/songRoutes.js";
+// Routes
+import userRoutes from "../routes/userRoutes.js";
+import songRoutes from "../routes/songRoutes.js";
 
 app.use("/api/user", userRoutes);
 app.use("/api/song", songRoutes);
 
-// ✅ Static frontend files
-const __dirname = path.resolve();
-if (process.env.NODE_ENV === 'production') {
-  const frontendPath = path.join(__dirname, '../../frontend/dist');
-  app.use(express.static(frontendPath));
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(frontendPath, 'index.html'));
-  });
-}
-
-// ✅ Start server
-const port = 5000;
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-  connectDb();
+// Connect DB once when deployed (only once in cold start)
+let isDbConnected = false;
+app.use(async (req, res, next) => {
+  if (!isDbConnected) {
+    await connectDb();
+    isDbConnected = true;
+  }
+  next();
 });
+
+// Required by Vercel: export the Express app as handler
+export default app;
