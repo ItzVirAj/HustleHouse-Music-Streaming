@@ -39,7 +39,7 @@ app.use(async (req, res, next) => {
 
 // Routes
 import userRoutes from "../backend/routes/userRoutes.js";
-import songRoutes from "../routes/routes/songRoutes.js";
+import songRoutes from "../backend/routes/songRoutes.js";
 
 app.use("/api/user", userRoutes);
 app.use("/api/song", songRoutes);
