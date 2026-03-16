@@ -18,7 +18,7 @@ export default defineConfig({
     }
   },
   build: {
-    outDir: '../frontend/dist', // Explicit relative path
+    outDir: 'dist',
     emptyOutDir: true,
     sourcemap: false
   }

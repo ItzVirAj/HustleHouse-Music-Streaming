@@ -14,6 +14,14 @@ const schema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    genre: {
+      type: String,
+      default: "",
+    },
+    mood: {
+      type: String,
+      default: "",
+    },
     thumbnail: {
       id: String,
       url: String,
@@ -25,7 +33,7 @@ const schema = new mongoose.Schema(
 
     album: {
       type: String,
-      required: true,
+      default: "",
     },
   },
   {

@@ -1,19 +1,20 @@
-import React, { useEffect } from "react";
-import Layout from "../components/Layout";
+import { useEffect } from "react";
 import { SongData } from "../context/Song";
 import { useParams } from "react-router-dom";
-import { assets } from "../assets/assets";
 import { UserData } from "../context/User";
 import { FaBookmark, FaPlay } from "react-icons/fa";
-import "./Album.css"; // custom style file
+import { getSongPlaceholder } from "../utils/songPlaceholder";
+import "./Album.css";
 
 const Album = () => {
   const {
     fetchAlbumSong,
     albumSong = [],
     albumData,
+    songs,
     setIsPlaying,
     setSelectedSong,
+    setIndex,
   } = SongData();
 
   const params = useParams();
@@ -24,94 +25,107 @@ const Album = () => {
   }, [fetchAlbumSong, params.id]);
 
   const handlePlayClick = (id) => {
+    const songIndex = songs.findIndex((song) => song._id === id);
+    if (songIndex >= 0) setIndex(songIndex);
     setSelectedSong(id);
     setIsPlaying(true);
-  };
-
-  const handleSaveToPlaylist = (id) => {
-    addToPlaylist(id);
   };
 
   const defaultThumbnail = "/images/default-album.jpg";
 
   return (
-    <Layout>
-      <div className="album-container">
-        {albumData ? (
-          <>
-            {/* Album Header */}
-            <div className="album-header glass-card">
-              <img
-                src={albumData.thumbnail?.url || defaultThumbnail}
-                alt={albumData.title || "Album Cover"}
-                className="album-cover"
-                onError={(e) => (e.target.src = defaultThumbnail)}
-              />
-              <div className="album-info">
-                <p className="album-type">Album</p>
-                <h2 className="album-title">{albumData.title || "Untitled Album"}</h2>
-                <p className="album-desc">
-                  {albumData.description || "No description available"}
-                </p>
-                <img src={assets.spotify_logo} className="spotify-logo" alt="Spotify" />
+    <div className="album-container">
+      {albumData ? (
+        <>
+          <section className="album-header">
+            <img
+              src={albumData.thumbnail?.url || defaultThumbnail}
+              alt={albumData.title || "Album cover"}
+              className="album-cover"
+              onError={(e) => (e.target.src = defaultThumbnail)}
+            />
+
+            <div className="album-info">
+              <span className="album-type">Album archive</span>
+              <h1 className="album-title">{albumData.title || "Untitled Album"}</h1>
+              <p className="album-desc">
+                {albumData.description || "No description available for this album."}
+              </p>
+
+              <div className="album-summary">
+                <div>
+                  <strong>{albumSong.length}</strong>
+                  <span>Tracks</span>
+                </div>
+                <div>
+                  <strong>HQ</strong>
+                  <span>Artwork</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="track-panel">
+            <div className="track-panel-head">
+              <div>
+                <span className="track-kicker">Track list</span>
+                <h2>Play from anywhere in the set</h2>
               </div>
             </div>
 
-            {/* Song List Header */}
             <div className="song-list-header">
-              <p># Title</p>
+              <p>Track</p>
               <p>Artist</p>
               <p className="desc-col">Description</p>
               <p className="text-center">Actions</p>
             </div>
-            <hr className="divider" />
 
-            {/* Song List */}
             {albumSong.length > 0 ? (
-              albumSong.map((song, index) => (
-                <div
-                  className="song-row glass-hover"
-                  key={song._id || index}
-                >
-                  <div className="song-index">
-                    <span className="index">{index + 1}</span>
-                    <img
-                      src={song.thumbnail?.url || defaultThumbnail}
-                      alt={song.title}
-                      className="song-thumb"
-                      onError={(e) => (e.target.src = defaultThumbnail)}
-                    />
-                    <span className="song-title">{song.title || "Untitled"}</span>
+              albumSong.map((song, index) => {
+                const placeholder = getSongPlaceholder(song.title);
+
+                return (
+                  <div className="song-row" key={song._id || index}>
+                    <div className="song-index">
+                      <span className="index">{String(index + 1).padStart(2, "0")}</span>
+                      <img
+                        src={song.thumbnail?.url || placeholder}
+                        alt={song.title}
+                        className="song-thumb"
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = placeholder;
+                        }}
+                      />
+                      <div>
+                        <span className="song-title">{song.title || "Untitled"}</span>
+                        <span className="song-meta-mobile">{song.singer || "Unknown"}</span>
+                      </div>
+                    </div>
+                    <p className="song-artist">{song.singer || "Unknown"}</p>
+                    <p className="desc-col song-desc">
+                      {song.description || "No description available"}
+                    </p>
+                    <div className="song-actions">
+                      <button onClick={() => addToPlaylist(song._id)} aria-label="Save to playlist">
+                        <FaBookmark />
+                      </button>
+                      <button onClick={() => handlePlayClick(song._id)} aria-label="Play song">
+                        <FaPlay />
+                      </button>
+                    </div>
                   </div>
-                  <p className="song-artist">{song.singer || "Unknown"}</p>
-                  <p className="desc-col song-desc">
-                    {song.description ? `${song.description.slice(0, 30)}...` : "No description"}
-                  </p>
-                  <div className="song-actions">
-                    <button
-                      onClick={() => handleSaveToPlaylist(song._id)}
-                      aria-label="Save to playlist"
-                    >
-                      <FaBookmark />
-                    </button>
-                    <button
-                      onClick={() => handlePlayClick(song._id)}
-                      aria-label="Play song"
-                    >
-                      <FaPlay />
-                    </button>
-                  </div>
-                </div>
-              ))
+                );
+              })
             ) : (
-              <p className="empty-message">No songs found in this album</p>
+              <p className="empty-message">No songs found in this album.</p>
             )}
-          </>
-        ) : (
-          <p className="empty-message">Loading album data...</p>
-        )}
-      </div>
-    </Layout>
+          </section>
+        </>
+      ) : (
+        <p className="empty-message">Loading album data...</p>
+      )}
+    </div>
   );
 };
 

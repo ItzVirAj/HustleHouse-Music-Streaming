@@ -19,10 +19,24 @@ const schema = new mongoose.Schema(
       type: String,
       default: "user",
     },
+    avatar: {
+      id: String,
+      url: String,
+    },
     playlist: [
       {
         type: String,
         required: true,
+      },
+    ],
+    favorites: [
+      {
+        type: String,
+      },
+    ],
+    recentlyPlayed: [
+      {
+        type: String,
       },
     ],
   },

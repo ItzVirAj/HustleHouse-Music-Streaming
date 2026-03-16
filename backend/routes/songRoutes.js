@@ -15,14 +15,18 @@ import {
 
 const router = express.Router();
 
+// Admin-only (write) routes — require auth
 router.post("/album/new", isAuth, uploadFile, createAlbum);
-router.get("/album/all", isAuth, getAllAlbums);
 router.post("/new", isAuth, uploadFile, addSong);
 router.post("/:id", isAuth, uploadFile, addThumbnail);
-router.get("/single/:id", isAuth, getSingleSong);
 router.delete("/:id", isAuth, deleteSong);
-router.get("/all", isAuth, getAllSongs);
-router.get("/album/:id", isAuth, getAllSongsByAlbum);
-router.get("/search/:query", isAuth, searchSongs);
+
+// Public read routes — no auth required
+router.get("/album/all", getAllAlbums);
+router.get("/all", getAllSongs);
+router.get("/search", searchSongs);
+router.get("/single/:id", getSingleSong);
+router.get("/album/:id", getAllSongsByAlbum);
+router.get("/search/:query", searchSongs);
 
 export default router;

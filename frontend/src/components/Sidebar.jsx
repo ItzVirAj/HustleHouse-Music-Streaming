@@ -1,53 +1,74 @@
-/* eslint-disable no-unused-vars */
-import React from "react";
 import { assets } from "../assets/assets";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import PlayListCard from "./PlayListCard";
-import { UserData } from "../context/User";
 import "./Sidebar.css";
 
 const Sidebar = () => {
   const navigate = useNavigate();
-  const { user } = UserData();
+  const location = useLocation();
+
+  const navItems = [
+    { label: "Home", icon: assets.home_icon, path: "/" },
+    { label: "Search", icon: assets.search_icon, path: "/search" },
+    { label: "Playlist", icon: assets.stack_icon, path: "/playlist" },
+  ];
 
   return (
-    <div className="sidebar">
-      {/* Top Nav Links */}
-      <div className="sidebar-section sidebar-menu">
-        <div className="sidebar-link" onClick={() => navigate("/")}>
-          <img src={assets.home_icon} alt="Home" />
-          <span>Home</span>
-        </div>
-        <div className="sidebar-link" onClick={() => navigate("/search")}>
-          <img src={assets.search_icon} alt="Search" />
-          <span>Search</span>
-        </div>
-      </div>
-
-      {/* Library & Playlist */}
-      <div className="sidebar-section sidebar-library">
-        <div className="sidebar-library-header">
-          <div className="library-left">
-            <img src={assets.stack_icon} alt="Library" />
-            <span>Your Library</span>
+    <aside className="sidebar-aurora">
+      <div className="sidebar-inner">
+        <div className="sidebar-brand">
+          <div className="brand-icon">
+            <span>HH</span>
           </div>
-          <div className="library-right">
-            <img src={assets.arrow_icon} alt="Arrow" />
-            <img src={assets.plus_icon} alt="Plus" />
+          <div>
+            <p className="brand-kicker">Station</p>
+            <h1 className="brand-name">HustleHouse</h1>
           </div>
         </div>
 
-        <div onClick={() => navigate("/playlist")}>
-          <PlayListCard />
+        <div className="sidebar-feature">
+          <span>Fresh drop</span>
+          <h2>Streetwave set</h2>
+          <p>Quick discovery and cleaner playback flow.</p>
         </div>
 
-        {user && user.role === "admin" && (
-          <button className="admin-btn" onClick={() => navigate("/admin")}>
-            Admin Dashboard
-          </button>
-        )}
+        <nav className="sidebar-nav">
+          <p className="nav-label">Navigate</p>
+          {navItems.map((item) => (
+            <div
+              key={item.path}
+              className={`sidebar-nav-item ${location.pathname === item.path ? "active" : ""}`}
+              onClick={() => navigate(item.path)}
+            >
+              <div className="nav-icon-wrap">
+                <img src={item.icon} alt={item.label} />
+              </div>
+              <span>{item.label}</span>
+              {location.pathname === item.path && <div className="active-indicator" />}
+            </div>
+          ))}
+        </nav>
+
+        <div className="sidebar-library">
+          <div className="library-header">
+            <div className="library-title">
+              <div className="nav-icon-wrap">
+                <img src={assets.stack_icon} alt="Library" />
+              </div>
+              <span>Your Library</span>
+            </div>
+            <button className="library-add-btn" onClick={() => navigate("/playlist")}>
+              <img src={assets.plus_icon} alt="Open playlist" />
+            </button>
+          </div>
+
+          <div className="library-list" onClick={() => navigate("/playlist")}>
+            <PlayListCard />
+          </div>
+        </div>
+
       </div>
-    </div>
+    </aside>
   );
 };
 

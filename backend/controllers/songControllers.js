@@ -44,7 +44,7 @@ export const addSong = TryCatch(async (req, res) => {
       message: "You are not admin",
     });
 
-  const { title, description, singer, album } = req.body;
+  const { title, description, singer, album, genre, mood } = req.body;
 
   const file = req.file;
 
@@ -54,16 +54,23 @@ export const addSong = TryCatch(async (req, res) => {
     resource_type: "video",
   });
 
-  await Song.create({
+  const payload = {
     title,
     description,
     singer,
+    genre: genre?.trim() || "",
+    mood: mood?.trim() || "",
     audio: {
       id: cloud.public_id,
       url: cloud.secure_url,
     },
-    album,
-  });
+  };
+
+  if (album?.trim()) {
+    payload.album = album.trim();
+  }
+
+  await Song.create(payload);
 
   res.json({
     message: "Song Added",
@@ -125,11 +132,45 @@ export const getSingleSong = TryCatch(async (req, res) => {
   res.json(song);
 });
 export const searchSongs = TryCatch(async (req, res) => {
-  const query = req.params.query;
+  const query = req.query.q ?? req.params.query ?? "";
+  const artist = req.query.artist ?? "";
+  const album = req.query.album ?? "";
+  const genre = req.query.genre ?? "";
+  const mood = req.query.mood ?? "";
 
-  const songs = await Song.find({
-    title: { $regex: query, $options: "i" },
-  });
+  const filters = {};
+
+  if (query.trim()) {
+    filters.$or = [
+      { title: { $regex: query, $options: "i" } },
+      { description: { $regex: query, $options: "i" } },
+      { singer: { $regex: query, $options: "i" } },
+    ];
+  }
+
+  if (artist.trim()) {
+    filters.singer = { $regex: artist, $options: "i" };
+  }
+
+  if (genre.trim()) {
+    filters.genre = { $regex: genre, $options: "i" };
+  }
+
+  if (mood.trim()) {
+    filters.mood = { $regex: mood, $options: "i" };
+  }
+
+  if (album.trim()) {
+    const matchedAlbums = await Album.find({
+      title: { $regex: album, $options: "i" },
+    }).select("_id");
+
+    filters.album = {
+      $in: matchedAlbums.map((matchedAlbum) => matchedAlbum._id.toString()),
+    };
+  }
+
+  const songs = await Song.find(filters);
 
   res.status(200).json({ success: true, songs });
 });

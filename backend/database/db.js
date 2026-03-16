@@ -7,9 +7,6 @@ const connectDb = async () => {
     }
 
     await mongoose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      // Add these additional options for better connection handling
       serverSelectionTimeoutMS: 5000,
       maxPoolSize: 10,
     });

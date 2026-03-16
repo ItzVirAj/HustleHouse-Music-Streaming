@@ -1,9 +1,19 @@
-import React from "react";
+import "./Loading.css";
 
 const Loading = () => {
   return (
-    <div className="flex justify-center items-center h-screen bg-[#212121]">
-      <div className="w-16 h-16 border-4 border-green-500 border-solid border-t-transparent rounded-full animate-spin"></div>
+    <div className="loading-aurora">
+      <div className="loading-wrapper">
+        <div className="loading-ring">
+          <div className="ring-segment ring-1"></div>
+          <div className="ring-segment ring-2"></div>
+          <div className="ring-segment ring-3"></div>
+        </div>
+        <div className="loading-brand">
+          <span className="loading-logo">♪</span>
+        </div>
+      </div>
+      <p className="loading-text">Loading your music...</p>
     </div>
   );
 };

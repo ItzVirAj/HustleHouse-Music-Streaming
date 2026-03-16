@@ -1,110 +1,162 @@
 .home-container {
-  padding: 60px 50px;
-  background: linear-gradient(135deg, #181717, #141414);
-  color: white;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  min-height: 100vh;
-  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 12px 0 32px;
 }
 
-/* 🎧 Banner glass effect */
-.home-banner {
-  background: rgba(255, 255, 255, 0.07);
-  border-radius: 30px;
-  padding: 40px;
-  margin-bottom: 60px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+.home-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.9fr);
+  gap: 24px;
 }
 
-/* Typography */
-.banner-title {
-  font-size: 48px;
-  font-weight: bold;
-  color: white;
+.hero-copy,
+.hero-panel {
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: var(--shadow-lg);
+}
+
+.hero-copy {
+  padding: clamp(24px, 4vw, 40px);
+  background:
+    linear-gradient(140deg, rgba(255, 122, 47, 0.18), rgba(255, 255, 255, 0.04) 48%),
+    rgba(255, 255, 255, 0.04);
+}
+
+.hero-kicker,
+.section-kicker,
+.hero-panel-label {
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.72rem;
+  color: var(--accent-soft);
+}
+
+.hero-copy h1 {
+  margin: 0.9rem 0 1rem;
   font-family: "Modrenize", sans-serif;
+  font-size: clamp(2.5rem, 6vw, 4.8rem);
+  line-height: 0.95;
+  letter-spacing: 0.03em;
 }
 
-.banner-subtitle {
-  font-size: 18px;
-  color: #dddddd;
-  margin-top: 10px;
-  font-family: "42dotSans", sans-serif;
+.hero-copy p {
+  max-width: 48rem;
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.hero-stats div {
+  padding: 16px 18px;
+  border-radius: 20px;
+  background: rgba(6, 19, 26, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.hero-stats strong {
+  display: block;
+  font-family: "Modrenize", sans-serif;
+  font-size: 1.7rem;
+  margin-bottom: 0.35rem;
+}
+
+.hero-stats span {
+  color: var(--text-muted);
+  font-size: 0.86rem;
+}
+
+.hero-panel {
+  padding: 24px;
+  background:
+    radial-gradient(circle at top right, rgba(100, 210, 193, 0.14), transparent 35%),
+    rgba(255, 255, 255, 0.04);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 100%;
+}
+
+.hero-panel h2 {
+  margin: 0.9rem 0 0.8rem;
+  font-family: "Modrenize", sans-serif;
+  font-size: 2rem;
+  line-height: 1.02;
+}
+
+.hero-panel p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.hero-panel-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.hero-panel-meta span {
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-primary);
+  font-size: 0.84rem;
 }
 
 .home-section {
-  margin-bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
 .section-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+  align-items: end;
+  gap: 16px;
 }
 
-/* Titles */
 .home-title {
-  font-size: 28px;
-  font-weight: bold;
+  margin: 0.45rem 0 0;
   font-family: "Modrenize", sans-serif;
-  color: white;
+  font-size: clamp(1.5rem, 2.6vw, 2.2rem);
 }
 
-/* Subtle glowing see-all button */
-.see-all {
-  font-size: 14px;
-  color: white;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 6px 14px;
-  border-radius: 20px;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  font-family: "Modrenize", sans-serif;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 2px 6px rgba(255, 255, 255, 0.05);
-}
-
-.see-all:hover {
-  background: white;
-  color: #000;
-}
-
-/* Horizontally scrollable album/song rows */
 .scroll-row {
   display: flex;
-  gap: 20px;
+  gap: 18px;
   overflow-x: auto;
-  padding-bottom: 10px;
-  scroll-behavior: smooth;
+  padding-bottom: 8px;
 }
 
 .scroll-row::-webkit-scrollbar {
-  height: 6px;
+  height: 8px;
 }
 
 .scroll-row::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.12);
 }
 
-.scroll-row::-webkit-scrollbar-track {
-  background: transparent;
-}
+@media (max-width: 900px) {
+  .home-hero {
+    grid-template-columns: 1fr;
+  }
 
-/* Song / Album Text */
-.song-name {
-  font-size: 15px;
-  font-weight: 600;
-  margin-top: 10px;
-  color: #ffffff;
-  font-family: "Modrenize", sans-serif;
-}
-
-.song-desc {
-  font-size: 13px;
-  color: #bbbbbb;
-  font-family: "42dotSans", sans-serif;
+  .hero-stats {
+    grid-template-columns: 1fr;
+  }
 }

@@ -1,15 +1,16 @@
 import jwt from "jsonwebtoken";
 import { User } from "../models/User.js";
 
-// Recommended: use .env for production
-const JWT_SECRET = process.env.JWT_SECRET || "your_strong_jwt_secret_key_here_12345!@#";
-
 export const isAuth = async (req, res, next) => {
   try {
     let token = req.cookies.token;
 
-    // Fallback: Check Authorization header
-    if (!token && req.headers.authorization && req.headers.authorization.startsWith("Bearer ")) {
+    // Fallback: Authorization header
+    if (
+      !token &&
+      req.headers.authorization &&
+      req.headers.authorization.startsWith("Bearer ")
+    ) {
       token = req.headers.authorization.split(" ")[1];
     }
 
@@ -20,7 +21,14 @@ export const isAuth = async (req, res, next) => {
       });
     }
 
-    const decodedData = jwt.verify(token, JWT_SECRET);
+    // ✅ DEBUG — remove after fixing
+    console.log("🔐 Token received:", token.substring(0, 20) + "...");
+    console.log("🔑 Verifying with secret:", process.env.JWT_SECRET?.substring(0, 10) + "...");
+
+    // ✅ NO FALLBACK — use exact same env variable
+    const decodedData = jwt.verify(token, process.env.JWT_SECRET);
+
+    console.log("✅ Token verified, user ID:", decodedData.id);
 
     const user = await User.findById(decodedData.id);
     if (!user) {
@@ -33,14 +41,17 @@ export const isAuth = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    console.error("Auth error:", error.message);
+    console.error("❌ Auth error:", error.message);
 
     if (error.name === "JsonWebTokenError") {
       return res.status(401).json({ success: false, message: "Invalid token" });
     }
 
     if (error.name === "TokenExpiredError") {
-      return res.status(401).json({ success: false, message: "Token expired, please login again" });
+      return res.status(401).json({
+        success: false,
+        message: "Token expired, please login again",
+      });
     }
 
     res.status(500).json({ success: false, message: "Authentication failed" });

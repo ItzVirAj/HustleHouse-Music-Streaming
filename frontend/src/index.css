@@ -1,32 +1,101 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
-@import './fonts/fonts.css';
+@import "./fonts/fonts.css";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --bg-primary: #06131a;
+  --bg-secondary: #0d1c24;
+  --bg-panel: rgba(10, 24, 31, 0.82);
+  --bg-panel-strong: rgba(11, 29, 37, 0.94);
+  --bg-soft: rgba(255, 255, 255, 0.05);
+  --bg-soft-strong: rgba(255, 255, 255, 0.09);
+  --border-soft: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --text-primary: #f4efe6;
+  --text-secondary: #c3b9a8;
+  --text-muted: #8f9a9e;
+  --accent: #ff7a2f;
+  --accent-soft: #ffb35c;
+  --accent-cool: #64d2c1;
+  --danger: #ff6175;
+  --shadow-lg: 0 22px 70px rgba(0, 0, 0, 0.38);
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 28px;
+  --radius-pill: 999px;
+  --sidebar-width: 290px;
+  --player-height: 108px;
+  --navbar-height: 88px;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  font-family: "Poppins", sans-serif;
-  @apply bg-black;
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(255, 122, 47, 0.16), transparent 26%),
+    radial-gradient(circle at 80% 10%, rgba(100, 210, 193, 0.12), transparent 24%),
+    linear-gradient(180deg, #06131a 0%, #071a20 45%, #041016 100%);
+  color: var(--text-primary);
+  font-family: "42dotSans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a,
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+#root {
+  min-height: 100vh;
 }
 
 .auth-input {
-  @apply w-full p-3 bg-gray-800 rounded-md border border-gray-700 focus:outline-none focus:border-gray-500;
+  @apply w-full rounded-2xl border p-3 focus:outline-none;
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: var(--text-primary);
 }
 
 .auth-btn {
-  @apply w-full bg-green-500 hover:bg-green-400 text-black font-semibold p-3 rounded-full;
+  @apply w-full rounded-full p-3 font-semibold;
+  background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+  color: #1e130d;
 }
 
 *::-webkit-scrollbar {
-  height: 0.5rem;
-  width: 0.1rem;
+  width: 0.45rem;
+  height: 0.45rem;
 }
 
 *::-webkit-scrollbar-track {
-  background-color: transparent;
+  background: transparent;
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: #2e2d2b;
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: var(--radius-pill);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.26);
 }

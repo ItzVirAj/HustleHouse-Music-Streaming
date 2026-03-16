@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import API from "../api/api";
 import { createContext, useContext, useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
@@ -26,6 +27,11 @@ export const UserProvider = ({ children }) => {
         password,
       });
 
+      // ✅ Save token to localStorage
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+      }
+
       toast.success(data.message);
       setUser(data.user);
       setIsAuth(true);
@@ -34,7 +40,7 @@ export const UserProvider = ({ children }) => {
       fetchSongs();
       fetchAlbums();
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Registration failed");
       setBtnLoading(false);
     }
   }
@@ -47,6 +53,11 @@ export const UserProvider = ({ children }) => {
         password,
       });
 
+      // ✅ Save token to localStorage
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+      }
+
       toast.success(data.message);
       setUser(data.user);
       setIsAuth(true);
@@ -55,7 +66,7 @@ export const UserProvider = ({ children }) => {
       fetchSongs();
       fetchAlbums();
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Login failed");
       setBtnLoading(false);
     }
   }
@@ -78,9 +89,16 @@ export const UserProvider = ({ children }) => {
     try {
       const { data } = await API.get("/user/logout");
 
+      // ✅ Clear token from localStorage
+      localStorage.removeItem("token");
+
+      toast.success(data.message);
       window.location.reload();
     } catch (error) {
-      toast.error(error.response.data.message);
+      // ✅ Even if API fails, still clear local state
+      localStorage.removeItem("token");
+      toast.error(error.response?.data?.message || "Logout failed");
+      window.location.reload();
     }
   }
 
@@ -89,15 +107,66 @@ export const UserProvider = ({ children }) => {
       const { data } = await API.post("/user/song/" + id);
 
       toast.success(data.message);
-      fetchUser();
+      if (data.user) {
+        setUser(data.user);
+      } else {
+        fetchUser();
+      }
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Failed to update playlist");
+    }
+  }
+
+  async function toggleFavorite(id) {
+    try {
+      const { data } = await API.post("/user/favorite/" + id);
+      toast.success(data.message);
+      if (data.user) {
+        setUser(data.user);
+      } else {
+        fetchUser();
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to update favorites");
+    }
+  }
+
+  async function addRecentlyPlayed(id) {
+    try {
+      const { data } = await API.post("/user/recent/" + id);
+      if (data.user) {
+        setUser(data.user);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function updateProfile({ name, file }) {
+    setBtnLoading(true);
+    try {
+      const formData = new FormData();
+      formData.append("name", name);
+      if (file) {
+        formData.append("file", file);
+      }
+
+      const { data } = await API.put("/user/profile", formData);
+      setUser(data.user);
+      toast.success(data.message);
+      return data.user;
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to update profile");
+      throw error;
+    } finally {
+      setBtnLoading(false);
     }
   }
 
   useEffect(() => {
     fetchUser();
   }, []);
+
   return (
     <UserContext.Provider
       value={{
@@ -109,6 +178,10 @@ export const UserProvider = ({ children }) => {
         loginUser,
         logoutUser,
         addToPlaylist,
+        toggleFavorite,
+        addRecentlyPlayed,
+        updateProfile,
+        fetchUser,
       }}
     >
       {children}

@@ -1,21 +1,21 @@
 import jwt from "jsonwebtoken";
 
-const JWT_SECRET = process.env.JWT_SECRET;
-
 const generateToken = (id, res) => {
-  const token = jwt.sign({ id }, JWT_SECRET, {
+  // ✅ DEBUG — remove after fixing
+  console.log("🔑 Signing with secret:", process.env.JWT_SECRET?.substring(0, 10) + "...");
+
+  const token = jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: "15d",
   });
 
-  // ✅ Set as HTTP-only cookie (good for SSR or server-auth)
   res.cookie("token", token, {
-    maxAge: 15 * 24 * 60 * 60 * 1000, // 15 days
+    maxAge: 15 * 24 * 60 * 60 * 1000,
     httpOnly: true,
-    sameSite: "strict",
-    secure: process.env.NODE_ENV === "production", // Only over HTTPS
+    secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
   });
 
-  return token; // ✅ Return for frontend to store in localStorage
+  return token;
 };
 
 export default generateToken;

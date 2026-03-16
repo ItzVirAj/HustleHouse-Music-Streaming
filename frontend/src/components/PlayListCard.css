@@ -1,0 +1,97 @@
+.playlist-card-aurora {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px;
+  border-radius: 22px;
+  background:
+    linear-gradient(145deg, rgba(255, 122, 47, 0.12), rgba(255, 255, 255, 0.03)),
+    rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.playlist-card-aurora:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 179, 92, 0.2);
+}
+
+.playlist-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.playlist-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.playlist-icon-inner {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--text-primary);
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.playlist-user-avatar {
+  object-fit: cover;
+  display: block;
+}
+
+.playlist-card-tag {
+  padding: 0.35rem 0.7rem;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-soft);
+}
+
+.playlist-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.playlist-card-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-family: "Modrenize", sans-serif;
+}
+
+.playlist-card-meta {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.playlist-card-copy {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+.meta-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+}
+
+.playlist-card-arrow {
+  color: var(--text-muted);
+  align-self: flex-end;
+}

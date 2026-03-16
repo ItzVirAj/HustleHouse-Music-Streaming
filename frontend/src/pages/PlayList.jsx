@@ -1,88 +1,108 @@
-import React, { useEffect, useState } from "react";
-import Layout from "../components/Layout";
+import { useEffect, useState } from "react";
 import { SongData } from "../context/Song";
-import { assets } from "../assets/assets";
 import { FaBookmark, FaPlay } from "react-icons/fa";
 import { UserData } from "../context/User";
-import "./Playlist.css"; // Import custom CSS
+import { getSongPlaceholder } from "../utils/songPlaceholder";
+import "./Playlist.css";
 
-const PlayList = ({ user }) => {
-  const { songs, setSelectedSong, setIsPlaying } = SongData();
-  const { addToPlaylist } = UserData();
+const PlayList = () => {
+  const { user, addToPlaylist } = UserData();
+  const { songs, setSelectedSong, setIsPlaying, setIndex } = SongData();
   const [myPlaylist, setMyPlaylist] = useState([]);
 
   useEffect(() => {
     if (songs && user && Array.isArray(user.playlist)) {
-      const filteredSongs = songs.filter((e) =>
-        user.playlist.includes(e._id.toString())
+      const filteredSongs = songs.filter((song) =>
+        user.playlist.includes(song._id.toString())
       );
       setMyPlaylist(filteredSongs);
     }
   }, [songs, user]);
 
   const playHandler = (id) => {
+    const songIndex = songs.findIndex((song) => song._id === id);
+    if (songIndex >= 0) setIndex(songIndex);
     setSelectedSong(id);
     setIsPlaying(true);
   };
 
-  const togglePlaylist = (id) => {
-    addToPlaylist(id);
-  };
-
   return (
-    <Layout>
-      <div className="playlist-container">
-        <div className="playlist-banner glass-card">
-          <img
-            src={
-              myPlaylist && myPlaylist[0]
-                ? myPlaylist[0].thumbnail.url
-                : "https://via.placeholder.com/250"
-            }
-            className="playlist-cover"
-            alt="Playlist"
-          />
-          <div className="playlist-info">
-            <p className="playlist-type">Playlist</p>
-            <h2 className="playlist-title">{user.name}'s Playlist</h2>
-            <h4 className="playlist-desc">Your favorite songs curated here</h4>
-            <img
-              src={assets.spotify_logo}
-              className="spotify-logo"
-              alt="Spotify Logo"
-            />
+    <div className="playlist-container">
+      <section className="playlist-banner">
+        <img
+          src={
+            myPlaylist?.[0]?.thumbnail?.url ||
+            getSongPlaceholder(myPlaylist?.[0]?.title || "Playlist")
+          }
+          className="playlist-cover"
+          alt="Playlist"
+        />
+
+        <div className="playlist-info">
+          <span className="playlist-type">Personal archive</span>
+          <h1 className="playlist-title">{user?.name || "Your"} playlist</h1>
+          <p className="playlist-desc">
+            Your saved songs now live in a cleaner queue with direct play and remove
+            actions.
+          </p>
+
+          <div className="playlist-summary">
+            <div>
+              <strong>{myPlaylist.length}</strong>
+              <span>Saved songs</span>
+            </div>
+            <div>
+              <strong>Instant</strong>
+              <span>Play access</span>
+            </div>
           </div>
         </div>
+      </section>
 
+      <section className="playlist-table">
         <div className="playlist-header">
-          <p>#</p>
+          <p>Track</p>
           <p>Artist</p>
           <p className="desc-col">Description</p>
           <p className="text-center">Actions</p>
         </div>
-        <hr className="divider" />
 
-        {myPlaylist?.map((e, i) => (
-          <div key={i} className="playlist-item glass-hover">
-            <div className="playlist-index">
-              <span className="index">{i + 1}</span>
-              <img src={e.thumbnail.url} alt="" className="song-thumb" />
-              <span className="song-title">{e.title}</span>
+        {myPlaylist.length > 0 ? (
+          myPlaylist.map((song, i) => (
+            <div key={song._id || i} className="playlist-item">
+              <div className="playlist-index">
+                <span className="index">{String(i + 1).padStart(2, "0")}</span>
+                <img
+                  src={song.thumbnail?.url || getSongPlaceholder(song.title)}
+                  alt={song.title}
+                  className="song-thumb"
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = getSongPlaceholder(song.title);
+                  }}
+                />
+                <div>
+                  <span className="song-title">{song.title}</span>
+                  <span className="song-meta-mobile">{song.singer}</span>
+                </div>
+              </div>
+              <p className="song-artist">{song.singer}</p>
+              <p className="desc-col song-desc">{song.description || "No description"}</p>
+              <div className="playlist-actions">
+                <button onClick={() => addToPlaylist(song._id)} aria-label="Remove from playlist">
+                  <FaBookmark />
+                </button>
+                <button onClick={() => playHandler(song._id)} aria-label="Play song">
+                  <FaPlay />
+                </button>
+              </div>
             </div>
-            <p className="song-artist">{e.singer}</p>
-            <p className="desc-col song-desc">{e.description.slice(0, 30)}...</p>
-            <div className="playlist-actions">
-              <button onClick={() => togglePlaylist(e._id)}>
-                <FaBookmark />
-              </button>
-              <button onClick={() => playHandler(e._id)}>
-                <FaPlay />
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-    </Layout>
+          ))
+        ) : (
+          <p className="empty-message">Your playlist is empty right now.</p>
+        )}
+      </section>
+    </div>
   );
 };
 

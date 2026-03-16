@@ -1,14 +1,23 @@
-// api/index.js — Vercel serverless entry point
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import cloudinary from "cloudinary";
-import { connectDb } from "../backend/database/db.js";
-import userRoutes from "../backend/routes/userRoutes.js";
-import songRoutes from "../backend/routes/songRoutes.js";
+import { connectDb } from "./database/db.js";
+import userRoutes from "./routes/userRoutes.js";
+import songRoutes from "./routes/songRoutes.js";
+import path from "path";
+import { fileURLToPath } from "url";
 
-dotenv.config();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// ✅ Load .env FIRST before anything else
+dotenv.config({ path: path.join(__dirname, ".env") });
+
+// ✅ Debug: Verify JWT_SECRET is loaded
+console.log("🔑 JWT_SECRET loaded:", process.env.JWT_SECRET ? "YES ✅" : "NO ❌");
+console.log("🔑 JWT_SECRET value:", process.env.JWT_SECRET?.substring(0, 10) + "...");
 
 cloudinary.v2.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -39,16 +48,6 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
-// Lazy DB connection (Vercel serverless pattern)
-let isDbConnected = false;
-app.use(async (req, res, next) => {
-  if (!isDbConnected) {
-    await connectDb();
-    isDbConnected = true;
-  }
-  next();
-});
-
 // Routes
 app.use("/api/user", userRoutes);
 app.use("/api/song", songRoutes);
@@ -58,4 +57,10 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "ok", message: "API is up 🚀" });
 });
 
-export default app;
+const PORT = process.env.PORT || 5000;
+
+connectDb().then(() => {
+  app.listen(PORT, () => {
+    console.log(`✅ Server running on http://localhost:${PORT}`);
+  });
+});

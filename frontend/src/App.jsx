@@ -1,7 +1,5 @@
-// eslint-disable-next-line no-unused-vars
-import React from "react";
 import Login from "./pages/Login";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import { UserData } from "./context/User";
@@ -9,11 +7,13 @@ import Loading from "./components/Loading";
 import Admin from "./pages/Admin";
 import PlayList from "./pages/PlayList";
 import Album from "./pages/Album";
-import Search from './pages/Search';
-
+import Search from "./pages/Search";
+import Profile from "./pages/Profile";
+import Layout from "./components/Layout";
 
 const App = () => {
   const { loading, user, isAuth } = UserData();
+
   return (
     <>
       {loading ? (
@@ -21,24 +21,25 @@ const App = () => {
       ) : (
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={isAuth ? <Home /> : <Login />} />
-            
             <Route
-              path="/album/:id"
-              element={isAuth ? <Album user={user} /> : <Login />}
-            />
+              element={isAuth ? <Layout /> : <Navigate to="/login" replace />}
+            >
+              <Route path="/" element={<Home />} />
+              <Route path="/album/:id" element={<Album />} />
+              <Route path="/playlist" element={<PlayList user={user} />} />
+              <Route path="/admin" element={<Admin />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/profile" element={<Profile />} />
+            </Route>
+
             <Route
-              path="/playlist"
-              element={isAuth ? <PlayList user={user} /> : <Login />}
+              path="/login"
+              element={isAuth ? <Navigate to="/" replace /> : <Login />}
             />
-            <Route path="/admin" element={isAuth ? <Admin /> : <Login />} />
-            <Route path="/login" element={isAuth ? <Home /> : <Login />} />
             <Route
               path="/register"
-              element={isAuth ? <Home /> : <Register />}
+              element={isAuth ? <Navigate to="/" replace /> : <Register />}
             />
-            <Route path="/search" element={isAuth ? <Search /> : <Login />} />
-
           </Routes>
         </BrowserRouter>
       )}

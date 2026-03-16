@@ -1,68 +1,160 @@
-.song-card {
-  width: 180px;
-  min-width: 180px;
+.song-card-aurora {
+  width: min(100%, 240px);
+  flex-shrink: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03)),
+    rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
   padding: 16px;
-  background: rgba(255, 255, 255, 0.04);
-  border-radius: 16px;
-  color: white;
-  cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
-}
-
-.song-card:hover {
-  background: rgba(255, 255, 255, 0.08);
-  transform: translateY(-4px);
-}
-
-.song-image-wrapper {
-  position: relative;
-  overflow: hidden;
-  border-radius: 12px;
-}
-
-.song-image {
-  width: 100%;
-  border-radius: 12px;
-  display: block;
-}
-
-.song-actions {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
   display: flex;
-  gap: 10px;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  flex-direction: column;
+  gap: 14px;
+  transition: 0.24s ease;
 }
 
-.song-image-wrapper:hover .song-actions {
+.song-card-aurora:hover {
+  transform: translateY(-4px);
+  border-color: rgba(100, 210, 193, 0.22);
+  box-shadow: var(--shadow-lg);
+}
+
+.song-visual {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.song-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.24s ease;
+}
+
+.song-card-aurora:hover .song-cover {
+  transform: scale(1.05);
+}
+
+.song-card-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  padding: 0.34rem 0.65rem;
+  border-radius: var(--radius-pill);
+  background: rgba(5, 18, 24, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.song-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 14px;
+  background: linear-gradient(180deg, transparent 35%, rgba(0, 0, 0, 0.46) 100%);
+  opacity: 0;
+  transition: opacity 0.24s ease;
+}
+
+.song-card-aurora:hover .song-overlay {
   opacity: 1;
 }
 
-.action-button {
-  background-color: #1db954;
-  color: black;
-  padding: 10px;
+.song-play-btn {
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
   border: none;
-  font-size: 14px;
-  cursor: pointer;
-  transition: transform 0.2s ease;
+  background: linear-gradient(135deg, var(--accent-cool), #9de0d7);
+  color: #03231f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 0;
+  font-size: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-.action-button:hover {
-  transform: scale(1.1);
+.song-queue-btn,
+.song-save-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(5, 18, 24, 0.72);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 0;
 }
 
-.song-name {
-  font-weight: 600;
-  margin-top: 10px;
+.song-top-actions {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  display: flex;
+  gap: 8px;
+}
+
+.song-queue-btn {
+  width: 42px;
+  height: 42px;
+  background: rgba(5, 18, 24, 0.84);
+}
+
+.song-save-btn {
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.song-play-btn svg,
+.song-queue-btn svg,
+.song-save-btn svg {
+  display: block;
+}
+
+.song-save-btn.saved {
+  color: var(--accent-soft);
+  border-color: rgba(255, 180, 121, 0.28);
+}
+
+.song-queue-btn:hover,
+.song-save-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.song-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.song-card-name {
+  margin: 0;
+  font-size: 1rem;
   font-family: "Modrenize", sans-serif;
+  line-height: 1.2;
 }
 
-.song-desc {
-  font-size: 13px;
-  color: #bbbbbb;
-  font-family: "42dotSans", sans-serif;
+.song-card-desc {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  min-height: 2.7em;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
